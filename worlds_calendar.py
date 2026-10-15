@@ -152,7 +152,7 @@ def build_vevent(ev: dict, now: dt.datetime, *, alarm_minutes: int | None,
         summary = f"{la} {wa}–{wb} {lb}"
     else:
         summary = f"{la} vs {lb}"
-    summary += f" · {league}"
+    summary += f" · {league}{' ' + stage if stage else ''}"
 
     desc = [f"{league}{' — ' + stage if stage else ''}", f"Best of {best_of}"]
     for t in (a, b):
