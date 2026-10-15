@@ -236,7 +236,7 @@ def main() -> int:
     ap.add_argument("--fixture", help="read events from a saved getSchedule JSON instead of the API (testing)")
     args = ap.parse_args()
 
-    slugs = [s.strip() for s in os.environ.get("LEAGUES", "worlds").split(",") if s.strip()]
+    slugs = [s.strip() for s in (os.environ.get("LEAGUES") or "worlds").split(",") if s.strip()]
     teams_filter = {t.strip().lower() for t in os.environ.get("TEAMS", "").split(",") if t.strip()}
     alarm = os.environ.get("ALARM_MINUTES", "").strip()
     alarm_minutes = int(alarm) if alarm.isdigit() and int(alarm) > 0 else None
