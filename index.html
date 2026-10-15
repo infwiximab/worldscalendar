@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worlds Calendar</title>
+<style>
+  :root { --bg:#f6f4ef; --card:#fff; --ink:#16161a; --muted:#6b6b76; --accent:#c8a24a; --line:#e4e0d6; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#0e0f13; --card:#171920; --ink:#f1efe9; --muted:#9a9aa6; --accent:#d9b65c; --line:#2a2d36; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+         font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+  main { max-width: 480px; margin: 0 auto; padding: 48px 16px; }
+  .eyebrow { color: var(--accent); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: 12px; }
+  h1 { font-size: 32px; line-height: 1.15; margin: 8px 0 12px; }
+  p { color: var(--muted); margin: 0 0 24px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+  a.btn, button { display:block; width:100%; text-align:center; padding:14px 16px; border-radius:12px;
+         font: inherit; font-weight:600; text-decoration:none; cursor:pointer; }
+  a.btn { background: var(--accent); color: #16161a; }
+  button { margin-top: 10px; background: transparent; color: var(--ink); border: 1px solid var(--line); }
+  code { display:block; margin-top:14px; font-size:12px; color:var(--muted); word-break:break-all; }
+  small { display:block; margin-top:20px; color:var(--muted); font-size:13px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">LoL Esports</div>
+  <h1>Worlds match calendar</h1>
+  <p>Every match, auto-updating. Knockout teams fill in as they're decided; start times follow Riot's schedule.</p>
+  <div class="card">
+    <a class="btn" id="sub" href="#">Subscribe in Apple Calendar</a>
+    <button id="copy" type="button">Copy link (Google / Outlook)</button>
+    <code id="url"></code>
+  </div>
+  <small>On iPhone, open this page in Safari and tap Subscribe. Times show in your own time zone.</small>
+</main>
+<script>
+  const https = new URL("worlds.ics", location.href).href;
+  const webcal = https.replace(/^https?:/, "webcal:");
+  document.getElementById("sub").href = webcal;
+  document.getElementById("url").textContent = https;
+  document.getElementById("copy").addEventListener("click", async (e) => {
+    try { await navigator.clipboard.writeText(https); e.target.textContent = "Copied ✓"; }
+    catch { e.target.textContent = "Copy failed — select the link below"; }
+  });
+</script>
+</body>
+</html>
